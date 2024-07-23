@@ -21,18 +21,36 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // let myBox = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01)
         
-        let mySphere = SCNSphere(radius: 0.1)
+        // let mySphere = createSphere(radius: 0.1, content: "woodTexture.png", vector: SCNVector3(x: 0, y: 0.2, z: -1))
+        
+        let world = createSphere(radius: 0.1, content: "world.png", vector: SCNVector3(x: 0, y: 0.2, z: -1))
+        
+        let mars = createSphere(radius: 0.2, content: "mars.png", vector: SCNVector3(x: 0.5, y: 0.2, z: -1))
+        
+        let venus = createSphere(radius: 0.15, content: "venus.png", vector: SCNVector3(x: 1, y: 0.2, z: -1))
+        
+        sceneView.scene.rootNode.addChildNode(world)
+        sceneView.scene.rootNode.addChildNode(mars)
+        sceneView.scene.rootNode.addChildNode(venus)
+        
+        sceneView.automaticallyUpdatesLighting = true
+    }
+    
+    func createSphere(radius: CGFloat, content: String, vector: SCNVector3) -> SCNNode {
+        
+        let mySphere = SCNSphere(radius: radius)
         
         let boxMaterial = SCNMaterial()
         
-        boxMaterial.diffuse.contents = UIImage(named: "art.scnassets/woodTexture.png")
+        boxMaterial.diffuse.contents = UIImage(named: "art.scnassets/\(content)")
         
         mySphere.materials = [boxMaterial]
         
         let node = SCNNode()
-        node.position = SCNVector3(0, 0.1, -0.5)
+        node.position = vector
         node.geometry = mySphere
-        sceneView.scene.rootNode.addChildNode(node)
+        
+        return node
     }
     
     override func viewWillAppear(_ animated: Bool) {
