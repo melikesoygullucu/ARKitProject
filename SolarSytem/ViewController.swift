@@ -12,13 +12,27 @@ import ARKit
 class ViewController: UIViewController, ARSCNViewDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set the view's delegate
         sceneView.delegate = self
         
+        // let myBox = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.01)
+        
+        let mySphere = SCNSphere(radius: 0.1)
+        
+        let boxMaterial = SCNMaterial()
+        
+        boxMaterial.diffuse.contents = UIImage(named: "art.scnassets/woodTexture.png")
+        
+        mySphere.materials = [boxMaterial]
+        
+        let node = SCNNode()
+        node.position = SCNVector3(0, 0.1, -0.5)
+        node.geometry = mySphere
+        sceneView.scene.rootNode.addChildNode(node)
     }
     
     override func viewWillAppear(_ animated: Bool) {
